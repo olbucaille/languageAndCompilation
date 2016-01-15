@@ -1,0 +1,68 @@
+PARSER_BEGIN(DSLProject)
+import Business.ArrayCustom;
+import Business.Env;
+
+public class DSLProject
+{
+public static  Env env;
+    public static void main(String args[]) throws ParseException 
+    {
+    env = new Env();
+        DSLProject parser = new DSLProject(System.in);
+        while (true)
+        {
+        System.out.println("hello world");
+            parser.parseOneLine();
+        }
+    }
+}
+PARSER_END(DSLProject)
+SKIP :
+{
+    " "
+|   "\r"
+|   "\t"
+}
+TOKEN:
+{
+
+    < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|    < ARRAY: "["(<BS>|<NUMBER>)*"]">
+|   < DIGIT: ["0"-"9"] >
+|	< BS: (" ")*>
+|   < EOL: "\n" >
+}
+void parseOneLine():
+{
+    ArrayCustom a;
+}
+{
+    a=expr() <EOL>      { env.display(); }
+  | <EOL>
+  | <EOF>               { System.exit(-1); }
+}
+ArrayCustom expr():
+{
+    ArrayCustom a;
+    ArrayCustom b;
+}
+{
+    a=element()
+    (
+        "+" b=expr()    { a.add(b); }
+    |   "-" b=expr()    { a.sub(b); }
+    )*
+                        { return a; }
+}
+
+ArrayCustom element():
+{
+    Token t;
+    ArrayCustom a;
+}
+{
+    t=<ARRAY>			{ ArrayCustom ac = new ArrayCustom(t.toString()); 
+    					env.add(ac);
+    					return ac;}
+|   "(" a=expr() ")"    { return a; }
+}
