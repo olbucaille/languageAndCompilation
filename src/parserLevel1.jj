@@ -1,4 +1,8 @@
 PARSER_BEGIN(DSLProject)
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import Business.ArrayCustom;
 import Business.Env;
 import Business.VectorCustom;
@@ -6,17 +10,50 @@ import Business.VectorCustom;
 public class DSLProject
 {
 public static  Env env;
-    public static void main(String args[]) throws ParseException 
-    {
-    env = new Env();
-        DSLProject parser = new DSLProject(System.in);
-        while (true)
-        {
-       
-            parser.parseOneLine();
-        }
-    }
-}
+   public static void main(String args[]) throws ParseException, IOException
+	{
+		env = new Env();
+		String ToExecute="";
+		DSLProject parser=null;
+
+		for(int i=0;i<args.length;++i)
+		{
+
+			if(i==0)
+				ToExecute=args[i];
+			else
+				if(i==1)
+					env.NameToGenerate=args[i];
+				else
+					env.store(args[i], true).name="%".concat(String.valueOf(i-1));
+
+		}
+		if(ToExecute.equals(""))
+		{
+			parser = new DSLProject(System.in);
+			while(true)
+				parser.parseOneLine();
+		}
+		else
+		{
+
+			InputStream is = new ByteArrayInputStream(Charset.forName("UTF-8").encode(ToExecute.toString()).array());
+
+			is.close();
+			String[] count = ToExecute.split("\n");
+
+			parser = new DSLProject(is);
+			int i=2;
+			while(count.length>i)
+			{
+				parser.parseOneLine();
+				i++;}
+		}
+
+
+
+
+	}}
 PARSER_END(DSLProject)
 SKIP :
 {
@@ -30,7 +67,7 @@ TOKEN:
     < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
 |   < ARRAY: "["(<BS>|<NUMBER>)*"]">
 |   < VECTOR: "["(<BS>|<ARRAY>)*"]">
-|	< VARIABLE: (["a"-"z"])*>
+|	< VARIABLE: ((("%")?(<DIGIT>)*)|(["a"-"z"])*)>
 |   < DIGIT: ["0"-"9"] >
 |	< BS: (" ")*>
 |   < EOL: "\n" >
@@ -42,7 +79,8 @@ void parseOneLine():
 {
     a=expr() <EOL>      { env.display(); }
   | <EOL>
-  | <EOF>               { System.exit(-1); }
+  | <EOF>               { System.exit(0); }
+
 }
 VectorCustom expr():
 {

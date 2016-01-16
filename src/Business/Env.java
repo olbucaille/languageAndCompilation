@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Env {
 
 	public static ArrayList<VectorCustom> elts;
-
+	public static String NameToGenerate ;
 
 	public Env()
 	{
