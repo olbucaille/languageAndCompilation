@@ -4,30 +4,30 @@ import java.util.ArrayList;
 
 public class Env {
 
-	public static ArrayList<ArrayCustom> elts;
+	public static ArrayList<VectorCustom> elts;
 
 
 	public Env()
 	{
-		elts = new ArrayList<ArrayCustom>();
+		elts = new ArrayList<VectorCustom>();
 	}
 
 
-	public static ArrayCustom add(ArrayCustom ac)
+	public static VectorCustom add(VectorCustom vc)
 	{
 
 
-remove(ac.name);
-		if(!elts.contains((ArrayCustom)ac))
-			elts.add(ac);
-/*		else
+		remove(vc.name);
+		if(!elts.contains((VectorCustom)vc))
+			elts.add(vc);
+		/*		else
 		{
 			for(int i=0;i<elts.size();i++)
 				if(elts.get(i).name.equals(ac.name))
 					elts.get(i).elts= ac.elts;
 		}*/
 
-			return ac;
+		return vc;
 
 	}
 
@@ -36,7 +36,7 @@ remove(ac.name);
 		for(int i=0;i<elts.size();i++)
 			if(elts.get(i).name.equals(name))
 			{
-			//	System.out.println("removed");
+				//	System.out.println("removed");
 				elts.remove(i);
 			}
 	}
@@ -47,23 +47,30 @@ remove(ac.name);
 		for(int i=0;i<elts.size();i++)
 			elts.get(i).display();
 	}
-	public static ArrayCustom  find(String s)
+
+	public static VectorCustom find(String s)
 	{
-		ArrayCustom ac=null ;
+		VectorCustom vc=null ;
 
 		for(int i=0;i<elts.size();i++)
 			if(elts.get(i).name.equals(s))
 				return elts.get(i); 
-		return ac;
+		return vc;
 	}
-	public static ArrayCustom store(String s, boolean isArray)
-	{
-		ArrayCustom ac =new ArrayCustom(s,isArray);
-		//System.out.print("prev");ac.display();
-		ac=add(ac);
-		//System.out.print("then");ac.display();
-		//display();
-		return ac;
 
+	public static VectorCustom store(String s, boolean isArray)
+	{
+		VectorCustom vc=null;
+		
+			vc =new VectorCustom(s,isArray);
+		
+	
+		if(find(vc.name)!=null)
+			return find(vc.name);
+		else
+		{
+			vc=add(vc);
+			return vc;
+		}
 	}
 }

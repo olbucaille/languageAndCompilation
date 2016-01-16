@@ -1,0 +1,82 @@
+PARSER_BEGIN(DSLProject)
+import Business.ArrayCustom;
+import Business.Env;
+import Business.VectorCustom;
+
+public class DSLProject
+{
+public static  Env env;
+    public static void main(String args[]) throws ParseException 
+    {
+    env = new Env();
+        DSLProject parser = new DSLProject(System.in);
+        while (true)
+        {
+       
+            parser.parseOneLine();
+        }
+    }
+}
+PARSER_END(DSLProject)
+SKIP :
+{
+    " "
+|   "\r"
+|   "\t"
+}
+TOKEN:
+{
+
+    < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
+|   < ARRAY: "["(<BS>|<NUMBER>)*"]">
+|   < VECTOR: "["(<BS>|<ARRAY>)*"]">
+|	< VARIABLE: (["a"-"z"])*>
+|   < DIGIT: ["0"-"9"] >
+|	< BS: (" ")*>
+|   < EOL: "\n" >
+}
+void parseOneLine():
+{
+    VectorCustom a;
+}
+{
+    a=expr() <EOL>      { env.display(); }
+  | <EOL>
+  | <EOF>               { System.exit(-1); }
+}
+VectorCustom expr():
+{
+    VectorCustom a;
+    VectorCustom b;
+}
+{
+    a=term()
+    (
+        "+" b=expr()    { a.add(b); return a; }
+    |   "-" b=expr()    { a.sub(b); return a; }
+    |   "=" b=expr()     { b.affect(a); return b;}
+    )*{return a;}
+}
+VectorCustom term():
+{
+    VectorCustom a;
+    VectorCustom b;
+}
+{
+    a=element()
+    (
+        "*" b=term()    { a.display();a.mul(b); return a; }
+    |   "/" b=term()    { a.div(b); return a;}
+    )*
+                        { return a; }
+}
+VectorCustom element():
+{
+    Token t;
+
+}
+{
+   t=<VECTOR>			{ return Env.store(t.toString(),true);}
+|  t=<VARIABLE>			{   return Env.store(t.toString(),false); }
+
+}
