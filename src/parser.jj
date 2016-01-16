@@ -11,7 +11,7 @@ public static  Env env;
         DSLProject parser = new DSLProject(System.in);
         while (true)
         {
-        System.out.println("hello world");
+       
             parser.parseOneLine();
         }
     }
@@ -27,7 +27,8 @@ TOKEN:
 {
 
     < NUMBER: (<DIGIT>)+ ( "." (<DIGIT>)+ )? >
-|    < ARRAY: "["(<BS>|<NUMBER>)*"]">
+|   < ARRAY: "["(<BS>|<NUMBER>)*"]">
+|	< VARIABLE: (["a"-"z"])*>
 |   < DIGIT: ["0"-"9"] >
 |	< BS: (" ")*>
 |   < EOL: "\n" >
@@ -49,10 +50,10 @@ ArrayCustom expr():
 {
     a=element()
     (
-        "+" b=expr()    { a.add(b); }
-    |   "-" b=expr()    { a.sub(b); }
-    )*
-                        { return a; }
+        "+" b=expr()    { a.add(b); return a; }
+    |   "-" b=expr()    { a.sub(b); return a; }
+    |   "=" b=expr()     { b.affect(a); return b;}
+    )*{return a;}
 }
 
 ArrayCustom element():
@@ -61,8 +62,7 @@ ArrayCustom element():
     ArrayCustom a;
 }
 {
-    t=<ARRAY>			{ ArrayCustom ac = new ArrayCustom(t.toString()); 
-    					env.add(ac);
-    					return ac;}
-|   "(" a=expr() ")"    { return a; }
+    t=<ARRAY>			{  return Env.store(t.toString(),true); }
+|  t=<VARIABLE>			{   return Env.store(t.toString(),false); }
+
 }

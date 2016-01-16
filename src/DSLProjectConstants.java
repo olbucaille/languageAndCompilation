@@ -13,11 +13,13 @@ public interface DSLProjectConstants {
   /** RegularExpression Id. */
   int ARRAY = 5;
   /** RegularExpression Id. */
-  int DIGIT = 6;
+  int VARIABLE = 6;
   /** RegularExpression Id. */
-  int BS = 7;
+  int DIGIT = 7;
   /** RegularExpression Id. */
-  int EOL = 8;
+  int BS = 8;
+  /** RegularExpression Id. */
+  int EOL = 9;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -30,13 +32,13 @@ public interface DSLProjectConstants {
     "\"\\t\"",
     "<NUMBER>",
     "<ARRAY>",
+    "<VARIABLE>",
     "<DIGIT>",
     "<BS>",
     "\"\\n\"",
     "\"+\"",
     "\"-\"",
-    "\"(\"",
-    "\")\"",
+    "\"=\"",
   };
 
 }

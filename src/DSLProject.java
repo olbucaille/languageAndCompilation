@@ -10,7 +10,7 @@ public static  Env env;
         DSLProject parser = new DSLProject(System.in);
         while (true)
         {
-        System.out.println("hello world");
+
             parser.parseOneLine();
         }
     }
@@ -19,7 +19,7 @@ public static  Env env;
     ArrayCustom a;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ARRAY:
-    case 11:
+    case VARIABLE:
       a = expr();
       jj_consume_token(EOL);
                           env.display();
@@ -45,8 +45,9 @@ public static  Env env;
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 9:
       case 10:
+      case 11:
+      case 12:
         ;
         break;
       default:
@@ -54,15 +55,20 @@ public static  Env env;
         break label_1;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 9:
-        jj_consume_token(9);
-        b = expr();
-                          a.add(b);
-        break;
       case 10:
         jj_consume_token(10);
         b = expr();
-                          a.sub(b);
+                          a.add(b); {if (true) return a;}
+        break;
+      case 11:
+        jj_consume_token(11);
+        b = expr();
+                          a.sub(b); {if (true) return a;}
+        break;
+      case 12:
+        jj_consume_token(12);
+        b = expr();
+                           b.affect(a); {if (true) return b;}
         break;
       default:
         jj_la1[2] = jj_gen;
@@ -70,7 +76,7 @@ public static  Env env;
         throw new ParseException();
       }
     }
-                          {if (true) return a;}
+       {if (true) return a;}
     throw new Error("Missing return statement in function");
   }
 
@@ -80,15 +86,11 @@ public static  Env env;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ARRAY:
       t = jj_consume_token(ARRAY);
-                                  ArrayCustom ac = new ArrayCustom(t.toString());
-                                        env.add(ac);
-                                        {if (true) return ac;}
+                                   {if (true) return Env.store(t.toString(),true);}
       break;
-    case 11:
-      jj_consume_token(11);
-      a = expr();
-      jj_consume_token(12);
-                          {if (true) return a;}
+    case VARIABLE:
+      t = jj_consume_token(VARIABLE);
+                                    {if (true) return Env.store(t.toString(),false);}
       break;
     default:
       jj_la1[3] = jj_gen;
@@ -114,7 +116,7 @@ public static  Env env;
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x921,0x600,0x600,0x820,};
+      jj_la1_0 = new int[] {0x261,0x1c00,0x1c00,0x60,};
    }
 
   /** Constructor with InputStream. */
