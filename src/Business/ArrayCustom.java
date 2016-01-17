@@ -1,9 +1,14 @@
 package Business;
+
+
 import java.io.PrintStream; 
 import java.util.ArrayList; 
-public class ArrayCustom { 
+
+public class ArrayCustom implements Observable{ 
+	
 	String name= "unknown";
 	ArrayList<Double> elts; 
+    private ArrayList <Observateur> observers = new ArrayList<Observateur>();
 
 	public ArrayCustom(String s, boolean isArray)
 	{ 
@@ -27,6 +32,8 @@ public class ArrayCustom {
 			name = s;
 		}
 	}
+
+	
 	public void display() 
 	{ 
 		System.out.print(name+" :");
@@ -58,4 +65,30 @@ public class ArrayCustom {
 		name= a.name;
 		Env.add(this);
 	}
+
+	@Override
+	public void ajouterObsertvateur(Observateur o) {
+		// TODO Auto-generated method stub
+		observers.add(o);
+	}
+
+	@Override
+	public void supprimerObservateur(Observateur o) {
+		// TODO Auto-generated method stub
+		int i = observers.indexOf(o);
+        if (i >= 0) {
+            observers.remove(i);
+        }
+	}
+
+	@Override
+	public void notifierObsertavateur() {
+		// TODO Auto-generated method stub
+		for (Observateur observer : observers) {
+            observer.actualiser(name,new ObjectToCompile());;
+            
+        }
+	}
+	
+	
 }
