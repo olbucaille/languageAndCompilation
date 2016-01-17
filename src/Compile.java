@@ -48,22 +48,15 @@ public class Compile extends ClassLoader {
         // creates the expression tree corresponding to
         // exp(i) = i > 3 && 6 > i
         //Exp exp = new And(new GT(new Var(0), new Cst(3)), new GT(new Cst(6),new Var(0)));
-        Exp exp = new Add(new Var(0),new Var(0));
+        Exp exp = new Add(new Var(0),new Var(1));
     	
     	// compiles this expression into an Expression class
         Compile main = new Compile();
-        //byte[] b = exp.compileCreateClass("Example");
-        int [] test = new int[4] ;
+        byte[] bytes = exp.compile("Example");
+        //int [] test = new int[4] ;
         
-        byte[] bytes= exp.compileNewField("Example", "a", "[I",test);
+        //byte[] bytes= exp.compileNewField("Example", "a", "[I",test);
         
-
-        
-      /*  ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
-        outputStream.write( b );
-        outputStream.write( c );*/
-
-        //byte bytes[] = outputStream.toByteArray( );
         
         FileOutputStream fos = new FileOutputStream("Example.class");
         fos.write(bytes);
@@ -73,10 +66,10 @@ public class Compile extends ClassLoader {
         
         Expression iexp = (Expression) expClass.newInstance();
         // ... and uses it to evaluate exp(0) to exp(9)
-        /*for (int i = 0; i < 10; ++i) {
-            int val = iexp.addInt(i, 0) ;
-            System.out.println(i +" + " + i + " = " + val);
-        }*/
+        for (int i = 0; i < 10; ++i) {
+            int val = iexp.addInt(i, i*2) ;
+            System.out.println(i +" + " + i*2 + " = " + val);
+        }
     }
 }
 
@@ -119,51 +112,7 @@ abstract class Exp implements Opcodes {
     }
     
     
-    /*
-     * Returns the byte code of an Expression class and his constructor
-     */
-    byte[] compileCreateClass(final String className) {
-        // class header
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        cw.visit(V1_1, ACC_PUBLIC, className, null, "java/lang/Object",
-                new String[] { Expression.class.getName() });
-
-        
-        
-        // default public constructor
-        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null,
-                null);
-        mv.visitVarInsn(ALOAD, 0);
-        mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V",
-                false);
-        mv.visitInsn(RETURN);
-        mv.visitMaxs(1, 1);
-        mv.visitEnd();
-        
-        
-
-        return cw.toByteArray();
-    }
-    
-    
-    byte[]  compileNewMethodeVector(String className){
-
-    // class header
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        cw.visit(V1_1, ACC_PUBLIC, className, null, "java/lang/Object",
-                new String[] { Expression.class.getName() });
-         
-	        // eval method
-        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "vector", "(II)I", null, null);
-	    compile(mv);
-	    mv.visitInsn(IRETURN);
-	    // max stack and max locals automatically computed
-	    mv.visitMaxs(0, 0);
-	    mv.visitEnd();
-	    
-	    return  cw.toByteArray();
-	    
-    }
+   
     
     byte[]  compileNewField(String className,String fieldName,String fieldType,Object initValue){
 

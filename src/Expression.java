@@ -49,7 +49,7 @@ public interface Expression {
      */
 
     int vector(int i, int j);
-    
+    int addInt(int i, int j);
     int addIntArray(int[] i, int[] j);
 }
 
