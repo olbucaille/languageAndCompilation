@@ -1,4 +1,5 @@
 
+
 /***
  * ASM examples: examples showing how ASM can be used
  * Copyright (c) 2000-2011 INRIA, France Telecom
