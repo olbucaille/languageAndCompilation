@@ -91,6 +91,10 @@ abstract class Exp implements Opcodes {
         cw.visit(V1_1, ACC_PUBLIC, name, null, "java/lang/Object",
                 new String[] { Expression.class.getName() });
 
+        FieldVisitor fv; 
+		fv = cw.visitField(ACC_STATIC, 	"a", "[I", null,null);
+		fv.visitEnd();
+			    
         // default public constructor
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null,
                 null);
@@ -122,7 +126,7 @@ abstract class Exp implements Opcodes {
                 new String[] { Expression.class.getName() });
 
         FieldVisitor fv; 
-		fv = cw.visitField(ACC_STATIC, 	fieldName, fieldType, null,initValue);
+		fv = cw.visitField(ACC_STATIC, 	fieldName, fieldType, null,null);
 		fv.visitEnd();
 			    
         
