@@ -45,19 +45,28 @@ public class ArrayCustom implements Observable{
 	public ArrayCustom add(ArrayCustom b) 
 	{ 
 		System.out.println("addition"); 
-		for(int i = 0; i < elts.size(); i++) 
-
-			elts.set(i, elts.get(i) + b.elts.get(i)); 
 		
-		return this;
+		String res ="[";
+		for(int i = 0; i < elts.size(); i++) 
+			res=res.concat(String.valueOf(elts.get(i) + b.elts.get(i))); 
+		res=res.concat("]");
+		ArrayCustom ac = new ArrayCustom(res, true);
+		
+		ac= Env.add(ac);
+		return ac;
 	} 
 	public ArrayCustom sub(ArrayCustom b) 
 	{ 
 		System.out.println("soustraction"); 
-		for(int i = 0; i < elts.size(); i++) 
-			elts.set(i, elts.get(i) - b.elts.get(i)); 
+		String res ="[";
 		
-		return this;
+		for(int i = 0; i < elts.size(); i++) 
+			res=res.concat(String.valueOf(elts.get(i) - b.elts.get(i))); 
+		res=res.concat("]");
+		ArrayCustom ac = new ArrayCustom(res, true);
+		
+		ac= Env.add(ac);
+		return ac;
 	} 
 
 	public void affect(ArrayCustom a)

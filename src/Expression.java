@@ -1,5 +1,4 @@
 
-
 /***
  * ASM examples: examples showing how ASM can be used
  * Copyright (c) 2000-2011 INRIA, France Telecom
@@ -52,6 +51,3 @@ public interface Expression {
     int addInt(int i, int j);
     int addIntArray(int[] i, int[] j);
 }
-
-
-

@@ -13,9 +13,6 @@ public static  Env env;
 
             parser.parseOneLine();
         }
-        
-        //Add addExpr = new Add(1,2);
-        
     }
 
   static final public void parseOneLine() throws ParseException {
@@ -61,17 +58,17 @@ public static  Env env;
       case 10:
         jj_consume_token(10);
         b = expr();
-                          a.add(b); {if (true) return a;}
+                          a=a.add(b); {if (true) return a;}
         break;
       case 11:
         jj_consume_token(11);
         b = expr();
-                          a.sub(b); {if (true) return a;}
+                          a=a.sub(b); {if (true) return a;}
         break;
       case 12:
         jj_consume_token(12);
         b = expr();
-                           b.affect(a); {if (true) return b;}
+                          b.affect(a); {if (true) return b;}
         break;
       default:
         jj_la1[2] = jj_gen;

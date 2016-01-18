@@ -50,8 +50,8 @@ ArrayCustom expr():
 {
     a=element()
     (
-        "+" b=expr()    { a.add(b); return a; }
-    |   "-" b=expr()    { a.sub(b); return a; }
+        "+" b=expr()    { a=a.add(b); return a; }
+    |   "-" b=expr()    { a=a.sub(b); return a; }
     |   "=" b=expr()     { b.affect(a); return b;}
     )*{return a;}
 }
