@@ -4,7 +4,9 @@ USAGE :
 a+%1 
 a+a
 
-" "tototest" "[[1 1]]"
+" "tototest" "[[1s1]]"
+
+NOTICE : YOU HAVE TO PUT AN S(for space) BETWEEN EVERY ARRAY VALUE
 
 1- program (WITH THIS FORMAT ( return line for each expr and at the end 2 returnline) 
 	note that if you put nothing it will start a console (REPL like)

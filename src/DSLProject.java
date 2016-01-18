@@ -24,7 +24,9 @@ public static  Env env;
                                 if(i==1)
                                         env.NameToGenerate=args[i];
                                 else
-                                        env.store(args[i], true).name="%".concat(String.valueOf(i-1));
+                                {
+                                	    env.store(args[i].replace("s", " "), true).name="%".concat(String.valueOf(i-1));
+                                }
 
                 }
                 if(ToExecute.equals(""))

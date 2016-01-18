@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/olbucaille/Desktop/lib/asm-5.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/olbucaille/Desktop/lib/asm-analysis-5.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/olbucaille/Desktop/lib/asm-commons-5.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/olbucaille/Desktop/lib/asm-tree-5.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/olbucaille/Desktop/lib/asm-util-5.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/olbucaille/Desktop/lib/asm-xml-5.0.4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
